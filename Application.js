@@ -7,12 +7,14 @@
   //给Component进行扩展，Template无法进行拓展，因为Template是Component的实例
   UI.Component.constructor.prototype.getApplication = function(){
     var self = this;
-    return self.getParent(APPLICATIONCOMPONENT_NAME).Application;
+    var applicationComponent = self.getParent(APPLICATIONCOMPONENT_NAME);
+    return applicationComponent ? applicationComponent.Application : null;
   };
 
   UI.Component.constructor.prototype.getScope = function(){
     var self = this;
-    return self.getParent(CONTAINERCOMPONENT_NAME).Scope;
+    var containerComponent = self.getParent(CONTAINERCOMPONENT_NAME);
+    return containerComponent ? containerComponent.Scope : null;
   };
 
   UI.Component.constructor.prototype.getParent = function(kind){
@@ -36,7 +38,7 @@
     kind : APPLICATIONCOMPONENT_NAME,
     init : function(){
       if(!this.hasParent(BODY_NAME)){
-        throw new Meteor.Error(10000,'Application必须包裹在body中！');
+        throw new Meteor.Error(10000, '错误的模板书写格式', 'Application必须包裹在body中！');
       }
     },
     render : function(){
@@ -48,10 +50,10 @@
     kind : CONTAINERCOMPONENT_NAME,
     init : function(){
       if(!this.hasParent(APPLICATIONCOMPONENT_NAME)){
-        throw new Meteor.Error(10000,'Container必须包裹在Application中！');
+        throw new Meteor.Error(10000,'错误的模板书写格式','Container必须包裹在Application中！');
       }
       if(this.hasParent(CONTAINERCOMPONENT_NAME)){
-        throw new Meteor.Error(10000,'Container不能再包裹Container');
+        throw new Meteor.Error(10000,'错误的模板书写格式','Container不能再包裹Container');
       }
     },
     render : function(){
@@ -62,7 +64,7 @@
   UI.registerHelper('Application',function(){
     var selfConstructor = arguments.callee;
     if(selfConstructor.__initialized__ === true){
-      throw new Meteor.Error(10000,'Application在整个应用中只能使用一次');
+      throw new Meteor.Error(10000,'错误的助理使用方式', 'Application在整个应用中只能使用一次');
     }
     selfConstructor.__initialized__ = true;
     return ApplicationComponent.extend({Application : {name : APPLICATIONCOMPONENT_NAME, Session : Session}});
@@ -72,7 +74,7 @@
     var Scope = this;
     var namespace = Scope.namespace;
     if(!namespace){
-      throw new Meteor.Error(10000,'必须配置namespace属性，例如{{> Container namespace=\"myContainer\"}}或者{{#Container namespace=\"myContainer\"}}{{/Container}}');
+      throw new Meteor.Error(10000,'错误的模板书写格式', '必须配置namespace属性，例如{{> Container namespace=\"myContainer\"}}或者{{#Container namespace=\"myContainer\"}}{{/Container}}');
     }
     Scope.Session = new ReactiveDict();
     return ContainerComponent.extend({Scope : Scope});
