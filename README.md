@@ -1,7 +1,7 @@
 Application使用说明
 ====================
 
-##  添加 `Application` Helper
+##  添加 Application Helper
 
 程序中需要有一个`全局的作用域`，因此我们需要一个`Application`诞生。但这并不能阻止使用者使用client的其他全局作用域，这样做只是为了书写上具备易读性。
 
@@ -20,7 +20,7 @@ Application使用说明
 </body>
 ```
 
-##  添加 `Container` Helper
+##  添加 Container Helper
 
 或许我们需要一个容器，来隔离各个页面或者模板的作用域，此时我们就需要在其中添加一个`Container助理`了。他是能被重用，并且可以隔离多个多个作用域空间的，其中的模板或者组件都会共享他所提供的作用域。
 
@@ -131,19 +131,19 @@ Template.temp1.rendered = function(){
 
 这样，两个不同的Container中的相同模板就具备不同的数据，而且他们是相互隔离的。这对于初始化数据时，做动态化和数据区别是非常有帮助的。当然也有需要注意的地方，只有在Container中的模板才能使用`getScope()`方法。除了这个方法，还有扩展其他下方法，全部的方法如下：
 
-####  `getScope()`
+####  getScope()
 
 获取组件（`Component`）所在容器（`Container`）的上下文（`Scope`）。如果组件确实是包裹在容器中的，那么就一定会有，反之返回`null`。以上示例中，`Template.temp2`和`Template.temp3`获取的上下文都是`null`。
 
-####  `getApplication()`
+####  getApplication()
 
 获取组件（`Component`）所在全局环境（`Application`）的上下文（`Application`）。如果组件确实是包裹在容器中的，那么就一定会有，反之返回`null`。以上示例中，`Template.temp3`获取的全局上下文是`null`。
 
-####  `getParent([String parentKind])`
+####  getParent([String parentKind])
 
 获取组件（`Component`）的`父组件`，如果什么参数都不传，默认是这样的。如果传入一个父组件名称（`parentKind`），则会向上`递归查找`。如果没有父组件或者找不到该名称的父组件，都会返回`null`。
 
-####  `hasParent([String parentKind])`
+####  hasParent([String parentKind])
 
 同`getParent([String parentKind])`，仅仅是对父组件存在性的一个判断。
 
