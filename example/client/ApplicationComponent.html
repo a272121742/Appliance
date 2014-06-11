@@ -1,0 +1,20 @@
+<head>
+  <title>ApplicationComponent</title>
+</head>
+
+<body>
+  {{#Application}}
+    {{#Container namespace="t1"}}
+      {{> temp1}}
+    {{/Container}}
+    {{#Container namespace="t2"}}
+      {{> temp1}}
+    {{/Container}}
+  {{/Application}}
+</body>
+
+<template name="temp1">
+  <input type="button" value="button"/> {{value}}
+</template>
+
+
