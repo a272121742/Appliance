@@ -1,4 +1,4 @@
-Application使用说明
+Appliance使用说明
 ====================
 
 ##  添加 Appliance Helper
@@ -180,6 +180,15 @@ Template.temp1.events(function(event, templateInstance){
 });
 ```
 
-如此这样，两个同一模板制造的按钮，就具备了不同功能（一个做加法，一个做减法）。同样的，这个templateInstance对应Component也会有扩展的方法，是否能获取到值取决于模板是否在Container或Application中。
+如此这样，两个同一模板制造的按钮，就具备了不同功能（一个做加法，一个做减法）。同样的，这个templateInstance对应Component也会有扩展的方法，是否能获取到值取决于模板是否在Container或Appliance中。
+
+## Appliance-API
+
+同样，为Appliance这个容器，拓展了几个API，以方便对子容器（Container）进行管理。
+
+### getContainer(namespace)
+
+获取对应命名空间的子容器（Container）。
+
 
 
