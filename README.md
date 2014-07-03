@@ -1,9 +1,9 @@
 Application使用说明
 ====================
 
-##  添加 Application Helper
+##  添加 Appliance Helper
 
-程序中需要有一个`全局的作用域`，因此我们需要一个`Application`诞生。但这并不能阻止使用者使用client的其他全局作用域，这样做只是为了书写上具备易读性。
+程序中需要有一个`全局的作用域`，因此我们需要一个`Appliance`诞生。但这并不能阻止使用者使用client的其他全局作用域，这样做只是为了书写上具备易读性。
 
 但要注意的是，他的存在需要两个必要条件：
 
@@ -14,9 +14,9 @@ Application使用说明
 
 ```html
 <body>
-  {{#Application}}
+  {{#Appliance}}
     <!--添加Container或其他Template-->
-  {{/Application}}
+  {{/Appliance}}
 </body>
 ```
 
@@ -26,7 +26,7 @@ Application使用说明
 
 他的存在需要三个必要条件：
 
-0.  必须在`Application`中，这种写法同样是基于易读性考虑。
+0.  必须在`Appliance`中，这种写法同样是基于易读性考虑。
 0.  `Container`中不能再次嵌套`Container`，否者，这是为了让开发者更加确定上下文所在位置。
 0.  `Container`的配置项中需要有一个`namespace属性`，并且这是必须的，但值可以相同。
 
@@ -34,11 +34,11 @@ Application使用说明
 
 ```html
 <body>
-  {{#Application}}
+  {{#Appliance}}
     {{#Container namespace="yourNamespace"}}
       <!--添加其他Template或HTML代码-->
     {{/Container}}
-  {{/Application}}
+  {{/Appliance}}
 </body>
 ```
 
@@ -50,7 +50,7 @@ Application使用说明
 
 ```html
 <body>
-  {{#Application}}
+  {{#Appliance}}
     {{#Container namespace="t1"}}
       {{> temp1}}
     {{/Container}}
@@ -59,7 +59,7 @@ Application使用说明
     {{/Container}}
 
     {{> temp2}}
-  {{/Application}}
+  {{/Appliance}}
 
   {{> temp3}}
 </body>
@@ -131,13 +131,13 @@ Template.temp1.rendered = function(){
 
 这样，两个不同的Container中的相同模板就具备不同的数据，而且他们是相互隔离的。这对于初始化数据时，做动态化和数据区别是非常有帮助的。当然也有需要注意的地方，只有在Container中的模板才能使用`getScope()`方法。除了这个方法，还有扩展其他下方法，全部的方法如下：
 
-####  getScope()
+####  getScope() / getContext()
 
 获取组件（`Component`）所在容器（`Container`）的上下文（`Scope`）。如果组件确实是包裹在容器中的，那么就一定会有，反之返回`null`。以上示例中，`Template.temp2`和`Template.temp3`获取的上下文都是`null`。
 
 ####  getApplication()
 
-获取组件（`Component`）所在全局环境（`Application`）的上下文（`Application`）。如果组件确实是包裹在容器中的，那么就一定会有，反之返回`null`。以上示例中，`Template.temp3`获取的全局上下文是`null`。
+获取组件（`Component`）所在全局环境（`Appliance`）的上下文（`Application`）。如果组件确实是包裹在容器中的，那么就一定会有，反之返回`null`。以上示例中，`Template.temp3`获取的全局上下文是`null`。
 
 ####  getParent([String parentKind])
 
@@ -146,6 +146,22 @@ Template.temp1.rendered = function(){
 ####  hasParent([String parentKind])
 
 同`getParent([String parentKind])`，仅仅是对父组件存在性的一个判断。
+
+####  getContainer()
+
+获取组件（`Component`）所在容器（`Container`）。如果没有容器，返回`null`。
+
+#### getAppliance()
+
+获取组件（`Component`）所在全局环境（`Appliance`）。如果没有，返回`null`。
+
+#### getSession()
+
+获取组件（`Component`）所在容器（`Container`）的上下文（`Scope`）的Session对象。
+
+#### getGlobalSession()
+
+获取组件（`Component`）所在全局环境（`Appliance`）的上下文（`Application`）的Session对象，也就是全局的Session。
 
 ### Template事件监听
 
