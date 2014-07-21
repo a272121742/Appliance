@@ -19,7 +19,7 @@
   UI.Component.constructor.prototype.getScope = function(){
     var self = this;
     var container = self.kind === CONTAINERCOMPONENT_NAME ? self : self.getParent(CONTAINERCOMPONENT_NAME);
-    return container ? containerComponent.Scope : null;
+    return container ? container.Scope : null;
   };
   // 获取Container组件的上下文Context（同getScope）
   UI.Component.constructor.prototype.getContext = function(){
